@@ -55,7 +55,7 @@ def extract_image_patch(image, bbox, patch_shape):
 
     # convert to top left, bottom right
     bbox[2:] += bbox[:2]
-    bbox = bbox.astype(np.int)
+    bbox = bbox.astype(np.int_)
 
     # clip at image boundaries
     bbox[:2] = np.maximum(0, bbox[:2])
@@ -73,7 +73,7 @@ class ImageEncoder(object):
     def __init__(self, checkpoint_filename, input_name="images",
                  output_name="features"):
         self.session = tf.compat.v1.Session()
-        with tf.gfile.GFile(checkpoint_filename, "rb") as file_handle:
+        with tf.compat.v1.gfile.GFile(checkpoint_filename, "rb") as file_handle:
             graph_def = tf.compat.v1.GraphDef()
             graph_def.ParseFromString(file_handle.read())
         tf.import_graph_def(graph_def, name="net")
